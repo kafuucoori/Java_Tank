@@ -14,7 +14,9 @@ public class Tank {
     // 定义坦克方向
     private Dir dir;
     // 设置坦克单次移动的距离，私有静态，不可变
-    private static final int SPEED = 10;
+    private static final int SPEED = 6;
+    // 设置坦克移动状态
+    private boolean moving = false;
 
     public Dir getDir() {
         return dir;
@@ -22,6 +24,14 @@ public class Tank {
 
     public void setDir(Dir dir) {
         this.dir = dir;
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 
     public Tank(int x, int y, Dir dir) {
@@ -33,6 +43,14 @@ public class Tank {
     public void paint(Graphics g) {
         // 填充一个矩形
         g.fillRect(x, y, 50, 50);
+        // 坦克移动
+        move();
+    }
+
+    private void move() {
+        if(!moving){
+            return;
+        }
 
         switch(dir) {
             case LEFT: x -= SPEED; break;

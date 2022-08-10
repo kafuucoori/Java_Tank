@@ -16,10 +16,13 @@ public class TankFrame extends Frame {
     // 初始化玩家坦克位置和方向
     Tank myTank = new Tank(200, 200, Dir.UP);
 
+    // 初始化子弹
+    Bullet b = new Bullet(300, 300 ,Dir.DOWN);
+
     // 创建窗口
     public TankFrame() {
         // 设置窗口大小
-        setSize(800, 600);
+        setSize(1500, 800);
         // 设置窗口大小不可变
         setResizable(false);
         // 设置窗口标题
@@ -41,6 +44,7 @@ public class TankFrame extends Frame {
     // 窗口重新绘制时会自动调用
     public void paint(Graphics g) {
         myTank.paint(g);
+        b.paint(g);
     }
 
     // 键盘监听处理
@@ -90,10 +94,16 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-            if(bl) myTank.setDir(Dir.LEFT);
-            if(br) myTank.setDir(Dir.Right);
-            if(bu) myTank.setDir(Dir.UP);
-            if(bd) myTank.setDir(Dir.DOWN);
+            if(!bl && !br && !bu && !bd)
+                myTank.setMoving(false);
+            else {
+                myTank.setMoving(true);
+                if (bl) myTank.setDir(Dir.LEFT);
+                if (br) myTank.setDir(Dir.Right);
+                if (bu) myTank.setDir(Dir.UP);
+                if (bd) myTank.setDir(Dir.DOWN);
+            }
+
         }
     }
 }
