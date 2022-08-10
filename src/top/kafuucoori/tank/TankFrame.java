@@ -13,12 +13,8 @@ import java.awt.event.WindowEvent;
  * @version: 1.0
  */
 public class TankFrame extends Frame {
-    // 定义坐标值
-    int x = 200, y = 200;
-    // 设置坦克初始方向
-    Dir dir = Dir.UP;
-    // 设置坦克单次移动的距离，私有静态，不可变
-    private static final int SPEED = 10;
+    // 初始化玩家坦克位置和方向
+    Tank myTank = new Tank(200, 200, Dir.UP);
 
     // 创建窗口
     public TankFrame() {
@@ -31,13 +27,11 @@ public class TankFrame extends Frame {
         // 设置窗口可见
         setVisible(true);
         // 添加窗口监听器
-
         this.addKeyListener(new MyKeyListener());
-
+        // 使窗口可以正常关闭
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                // 使窗口可以正常关闭
                 System.exit(0);
             }
         });
@@ -46,15 +40,7 @@ public class TankFrame extends Frame {
     @Override
     // 窗口重新绘制时会自动调用
     public void paint(Graphics g) {
-        // 填充一个矩形
-        g.fillRect(x, y, 50, 50);
-
-        switch(dir) {
-            case LEFT: x -= SPEED; break;
-            case Right: x += SPEED; break;
-            case UP: y -= SPEED; break;
-            case DOWN: y += SPEED; break;
-        }
+        myTank.paint(g);
     }
 
     // 键盘监听处理
@@ -104,10 +90,10 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-            if(bl) dir = Dir.LEFT;
-            if(br) dir = Dir.Right;
-            if(bu) dir = Dir.UP;
-            if(bd) dir = Dir.DOWN;
+            if(bl) myTank.setDir(Dir.LEFT);
+            if(br) myTank.setDir(Dir.Right);
+            if(bu) myTank.setDir(Dir.UP);
+            if(bd) myTank.setDir(Dir.DOWN);
         }
     }
 }

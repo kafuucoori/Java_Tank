@@ -13,8 +13,10 @@ import java.awt.event.WindowEvent;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
+        // 创建一个新窗口
         TankFrame tf = new TankFrame();
 
+        // 每50ms重绘一次窗口
         while(true) {
             Thread.sleep(50);
             tf.repaint();
