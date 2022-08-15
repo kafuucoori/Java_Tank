@@ -18,6 +18,8 @@ public class Tank {
     // 设置坦克移动状态
     private boolean moving = false;
 
+    private TankFrame tf = null;
+
     public Dir getDir() {
         return dir;
     }
@@ -34,15 +36,19 @@ public class Tank {
         this.moving = moving;
     }
 
-    public Tank(int x, int y, Dir dir) {
+    public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = tf;
     }
 
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.yellow);
         // 填充一个矩形
         g.fillRect(x, y, 50, 50);
+        g.setColor(c);
         // 坦克移动
         move();
     }
@@ -58,6 +64,10 @@ public class Tank {
             case UP: y -= SPEED; break;
             case DOWN: y += SPEED; break;
         }
+    }
+
+    public void fire() {
+        tf.b = new Bullet(this.x + 20, this.y + 20, this.dir);
     }
 
 }

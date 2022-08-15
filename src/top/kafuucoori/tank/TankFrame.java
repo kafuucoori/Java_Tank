@@ -14,15 +14,16 @@ import java.awt.event.WindowEvent;
  */
 public class TankFrame extends Frame {
     // 初始化玩家坦克位置和方向
-    Tank myTank = new Tank(200, 200, Dir.UP);
-
+    Tank myTank = new Tank(200, 200, Dir.UP, this);
     // 初始化子弹
     Bullet b = new Bullet(300, 300 ,Dir.DOWN);
+    // 定义窗口大小
+    static final int GAME_WIDTH = 1500, GAME_HEIGHT = 800;
 
     // 创建窗口
     public TankFrame() {
         // 设置窗口大小
-        setSize(1500, 800);
+        setSize(GAME_WIDTH, GAME_HEIGHT);
         // 设置窗口大小不可变
         setResizable(false);
         // 设置窗口标题
@@ -38,6 +39,22 @@ public class TankFrame extends Frame {
                 System.exit(0);
             }
         });
+    }
+
+    // 利用双缓冲防止窗口闪烁
+    Image offScreenImage = null;
+    @Override
+    public void update(Graphics g){
+        if(offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.black);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
     }
 
     @Override
@@ -88,6 +105,10 @@ public class TankFrame extends Frame {
                     bu = false; break;
                 case KeyEvent.VK_DOWN:
                     bd = false; break;
+
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire(); break;
+
                 default: break;
             }
             setMainTankDir();
