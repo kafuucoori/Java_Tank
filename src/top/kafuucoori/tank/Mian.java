@@ -6,20 +6,20 @@ import java.awt.event.WindowEvent;
 
 /**
  * @Author: KafuuCoori
- * @Date: 2022/8/3 - 08 - 03 - 10:31
+ * @Date: 2022/8/22 - 08 - 22 - 15:02
  * @Description: top.kafuucoori.tank
  * @version: 1.0
  */
-public class Main {
+public class Mian {
 
     public static void main(String[] args) throws InterruptedException {
-        // 创建一个新窗口
-        TankFrame tf = new TankFrame();
+        TankFrame tf = new TankFrame(); // 创建窗口
 
-        // 每50ms重绘一次窗口
         while(true) {
             Thread.sleep(50);
             tf.repaint();
         }
+
     }
+
 }
