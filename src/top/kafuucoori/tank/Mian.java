@@ -13,8 +13,10 @@ import java.awt.event.WindowEvent;
 public class Mian {
 
     public static void main(String[] args) throws InterruptedException {
+
         TankFrame tf = new TankFrame(); // 创建窗口
 
+        // 定时重绘窗口
         while(true) {
             Thread.sleep(50);
             tf.repaint();
