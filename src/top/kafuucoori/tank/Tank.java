@@ -11,9 +11,10 @@ import java.awt.*;
 public class Tank {
 
     private int x, y;
-    private Dir dir = Dir.DOWN;
+    private Dir dir;
     private boolean moving = false;
     private static final int SPEED = 6;
+    private TankFrame tf = null;
 
     public boolean isMoving() {
         return moving;
@@ -31,15 +32,29 @@ public class Tank {
         this.dir = dir;
     }
 
-    public Tank(int x, int y, Dir dir) {
+    public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = tf;
     }
 
     // 绘制坦克
     public void paint(Graphics g) {
-        g.fillRect(x, y, 50, 50);
+        switch(dir) {
+            case LEFT:
+                g.drawImage(ResourceMgr.tankL, x, y,null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.tankU, x, y,null);
+                break;
+            case Right:
+                g.drawImage(ResourceMgr.tankR, x, y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD, x, y,null);
+                break;
+        }
         move();
     }
 
@@ -52,6 +67,11 @@ public class Tank {
             case Right: x += SPEED; break;
             case DOWN: y += SPEED; break;
         }
+    }
+
+    // 坦克开火
+    public void fire() {
+        tf.bullets.add(new Bullet(this.x, this.y, this.dir, this.tf));
     }
 
 }

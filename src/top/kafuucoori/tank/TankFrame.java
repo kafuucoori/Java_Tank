@@ -5,6 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: KafuuCoori
@@ -14,12 +16,13 @@ import java.awt.event.WindowEvent;
  */
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank(600, 400, Dir.DOWN);
-    Bullet bullet = new Bullet(300, 300, Dir.DOWN);
+    Tank myTank = new Tank(600, 400, Dir.DOWN, this);
+    List<Bullet> bullets = new ArrayList<>();
+    static final int GAME_WIDTH = 1300, GAME_HEIGHT = 800;
 
     // 创建窗口
     public TankFrame() {
-        setSize(1300, 800); // 设置窗口大小
+        setSize(GAME_WIDTH, GAME_HEIGHT); // 设置窗口大小
         setResizable(false); // 禁用窗口改变大小
         setTitle("Tank War"); // 设置标题
         setVisible(true); // 设置窗口可见
@@ -33,10 +36,27 @@ public class TankFrame extends Frame {
         });
     }
 
+    Image offScreenImage = null;
+    @Override   // 双缓冲解决屏幕闪烁
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
+
     @Override   // 绘制画面内容
     public void paint(Graphics g) { // 窗口重新绘制时自动调用
         myTank.paint(g);
-        bullet.paint(g);
+        for(int i=0; i<bullets.size(); i++) {
+            bullets.get(i).paint(g);
+        }
     }
 
     // 键盘监听处理
@@ -51,10 +71,11 @@ public class TankFrame extends Frame {
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
             switch (key) {
-                case KeyEvent.VK_LEFT: bL = true; break;
-                case KeyEvent.VK_UP: bU = true; break;
+                case KeyEvent.VK_LEFT:  bL = true; break;
+                case KeyEvent.VK_UP:    bU = true; break;
                 case KeyEvent.VK_RIGHT: bR = true; break;
-                case KeyEvent.VK_DOWN: bD = true; break;
+                case KeyEvent.VK_DOWN:  bD = true; break;
+                case KeyEvent.VK_SPACE: myTank.fire();  break;
                 default: break;
             }
             setMainTankDir();
@@ -64,10 +85,10 @@ public class TankFrame extends Frame {
         public void keyReleased(KeyEvent e) {
             int key = e.getKeyCode();
             switch (key) {
-                case KeyEvent.VK_LEFT: bL = false; break;
-                case KeyEvent.VK_UP: bU = false; break;
+                case KeyEvent.VK_LEFT:  bL = false; break;
+                case KeyEvent.VK_UP:    bU = false; break;
                 case KeyEvent.VK_RIGHT: bR = false; break;
-                case KeyEvent.VK_DOWN: bD = false; break;
+                case KeyEvent.VK_DOWN:  bD = false; break;
                 default: break;
             }
             setMainTankDir();
