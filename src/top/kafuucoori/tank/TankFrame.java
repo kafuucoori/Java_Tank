@@ -18,6 +18,7 @@ public class TankFrame extends Frame {
 
     Tank myTank = new Tank(600, 400, Dir.DOWN, this);
     List<Bullet> bullets = new ArrayList<>();
+    List<EnemTank> tanks = new ArrayList<>();
     static final int GAME_WIDTH = 1300, GAME_HEIGHT = 800;
 
     // 创建窗口
@@ -53,9 +54,22 @@ public class TankFrame extends Frame {
 
     @Override   // 绘制画面内容
     public void paint(Graphics g) { // 窗口重新绘制时自动调用
-        myTank.paint(g);
+        // 显示当前子弹数量
+        Color c = g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹数量：" + bullets.size(), 10, 60);
+        g.setColor(c);
+
+        myTank.paint(g); // 画出我方坦克
+
+        // 画出我方子弹
         for(int i=0; i<bullets.size(); i++) {
             bullets.get(i).paint(g);
+        }
+
+        // 画出敌方坦克
+        for(int i=0; i<tanks.size(); i++) {
+            tanks.get(i).paint(g);
         }
     }
 

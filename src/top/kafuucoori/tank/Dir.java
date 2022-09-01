@@ -7,5 +7,8 @@ package top.kafuucoori.tank;
  * @version: 1.0
  */
 public enum Dir {
+
+    // 定义方向枚举类
     LEFT, UP, Right, DOWN
+
 }

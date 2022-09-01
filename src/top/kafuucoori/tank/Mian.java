@@ -1,9 +1,5 @@
 package top.kafuucoori.tank;
 
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 /**
  * @Author: KafuuCoori
  * @Date: 2022/8/22 - 08 - 22 - 15:02
@@ -13,15 +9,19 @@ import java.awt.event.WindowEvent;
 public class Mian {
 
     public static void main(String[] args) throws InterruptedException {
+        // 创建窗口
+        TankFrame tf = new TankFrame();
 
-        TankFrame tf = new TankFrame(); // 创建窗口
+        // 初始化敌方坦克
+        for(int i=0; i<5; i++) {
+            tf.tanks.add(new EnemTank(50 + i*100, 200, Dir.LEFT, tf));
+        }
 
         // 定时重绘窗口
         while(true) {
             Thread.sleep(50);
             tf.repaint();
         }
-
     }
 
 }

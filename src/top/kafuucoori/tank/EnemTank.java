@@ -8,15 +8,15 @@ import java.awt.*;
  * @Description: top.kafuucoori.tank
  * @version: 1.0
  */
-public class Tank {
+public class EnemTank {
 
     private int x, y;
     private Dir dir;
     private TankFrame tf = null;
     private boolean moving = false;
     private static final int SPEED = 6;
-    public static int WIDTH = ResourceMgr.tankD.getWidth();
-    public static int Height = ResourceMgr.tankD.getHeight();
+    public static int WIDTH = ResourceMgr.etankD.getWidth();
+    public static int Height = ResourceMgr.etankD.getHeight();
 
     public boolean isMoving() {
         return moving;
@@ -34,7 +34,7 @@ public class Tank {
         this.dir = dir;
     }
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public EnemTank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -45,16 +45,16 @@ public class Tank {
     public void paint(Graphics g) {
         switch(dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.tankL, x, y,null);
+                g.drawImage(ResourceMgr.etankL, x, y,null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tankU, x, y,null);
+                g.drawImage(ResourceMgr.etankU, x, y,null);
                 break;
             case Right:
-                g.drawImage(ResourceMgr.tankR, x, y,null);
+                g.drawImage(ResourceMgr.etankR, x, y,null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD, x, y,null);
+                g.drawImage(ResourceMgr.etankD, x, y,null);
                 break;
         }
 
@@ -75,8 +75,8 @@ public class Tank {
 
     // 坦克开火
     public void fire() {
-        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
-        int bY = this.y + Tank.Height/2 - Bullet.Height/2;
+        int bX = this.x + EnemTank.WIDTH/2 - Bullet.WIDTH/2;
+        int bY = this.y + EnemTank.Height/2 - Bullet.Height/2;
         tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
     }
 

@@ -11,12 +11,14 @@ import java.awt.*;
 public class Bullet {
 
     private static final int SPEED = 12;
-    private static int WIDTH = 10, HEIGHT = 10;
+    public static int WIDTH = ResourceMgr.bulletD.getWidth();
+    public static int Height = ResourceMgr.bulletD.getHeight();
     private boolean live = true;
     private int x, y;
     private Dir dir;
     TankFrame tf = null;
 
+    // 构造子弹
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
@@ -32,18 +34,19 @@ public class Bullet {
 
         switch(dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.bulletL, x+20, y+20,null);
+                g.drawImage(ResourceMgr.bulletL, x, y,null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.bulletU, x+20, y+20,null);
+                g.drawImage(ResourceMgr.bulletU, x, y,null);
                 break;
             case Right:
-                g.drawImage(ResourceMgr.bulletR, x+20, y+20,null);
+                g.drawImage(ResourceMgr.bulletR, x, y,null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x+20, y+20,null);
+                g.drawImage(ResourceMgr.bulletD, x, y,null);
                 break;
         }
+
         move();
     }
 
@@ -57,7 +60,6 @@ public class Bullet {
         }
 
         if(x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) live = false;
-
     }
 
 }
